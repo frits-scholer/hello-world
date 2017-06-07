@@ -393,6 +393,21 @@ void show_event(string s, clock_t& tm) {
   cerr <<  "\t" << s << " " << (double) tm/CLOCKS_PER_SEC << " s "<< endl;
 }
 
+bigint cnv_double(double d, int p) {
+    stringstream aa;
+    aa << d;
+    string s = aa.str();
+    int pos = s.find('.'); 
+    if (d<1.0) {
+      s = s.substr(pos+1);
+    }
+    else {
+      s.erase(pos,1);
+    }
+    s.append(p-s.length(),'0');
+    return bigint(s);
+}
+
 int main() {
   //const int n=20;
   int X, P;
@@ -403,7 +418,7 @@ int main() {
   double G0 = 1.0/X;
   //for (int i=0;i<n;i++)
   while (1)  {
-    cout << G0 << endl;
+    cout << G0  << '\t' << cnv_double(G0,P) << endl;
     double Qi1 = X*G0;
     double Qi2 = 3 - Qi1*G0;
     //double G1 = 0.5*Qi2*(i==n-1?Qi1:G0);
@@ -411,6 +426,6 @@ int main() {
     if (G1 <= G0) {G0=X*G1;break;}
     G0=G1;
   }
-  cout << "The approximated square root = " << G0 << endl;
+  cout << "The approximated square root = " << G0  << '\t' << cnv_double(G0,P) << endl;
   cout << "The square root = " << sqrt(X) << endl;
 }
