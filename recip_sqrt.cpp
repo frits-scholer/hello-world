@@ -408,6 +408,13 @@ bigint cnv_double(double d, int p) {
     return bigint(s);
 }
 
+bigint div10(bigint b, int p) {
+    stringstream aa;
+    aa << b;
+    string s = aa.str();
+    return bigint(s.substr(0,s.length()-p));
+}
+
 int main() {
   //const int n=20;
   int X, P;
@@ -415,17 +422,21 @@ int main() {
   cin >> X;
   cout << "Enter precision\n";
   cin >> P;
+  P+=5;
   double G0 = 1.0/X;
-  //for (int i=0;i<n;i++)
+  bigint bG0 = cnv_double(G0,P);
   while (1)  {
-    cout << G0  << '\t' << cnv_double(G0,P) << endl;
+    cout << G0  << '\t' << bG0 << endl;
     double Qi1 = X*G0;
+    bigint bQi1 = bG0*X;
     double Qi2 = 3 - Qi1*G0;
-    //double G1 = 0.5*Qi2*(i==n-1?Qi1:G0);
+    bigint bG1 = (bG0*3 - div10(bQi1*bG0*bG0,2*P))/2;
     double G1 = 0.5*Qi2*G0;
-    if (G1 <= G0) {G0=X*G1;break;}
+    if (bG1 <= bG0) {G0=X*G1;bG0=bG1*X;break;}
     G0=G1;
+    bG0=bG1;
   }
-  cout << "The approximated square root = " << G0  << '\t' << cnv_double(G0,P) << endl;
+  cout << "The approximated square root = " << G0  << '\t' << bG0 << endl;
   cout << "The square root = " << sqrt(X) << endl;
+  cout << bG0.trunc(P-5).sod() << endl;
 }
