@@ -395,15 +395,8 @@ void show_event(string s, clock_t& tm) {
 
 bigint cnv_double(double d, int p) {
     stringstream aa;
-    aa << d;
-    string s = aa.str();
-    int pos = s.find('.'); 
-    if (d<1.0) {
-      s = s.substr(pos+1);
-    }
-    else {
-      s.erase(pos,1);
-    }
+    aa << setprecision(15) << d;
+    string s = aa.str().substr(2);
     s.append(p-s.length(),'0');
     return bigint(s);
 }
@@ -423,10 +416,9 @@ int main() {
   cout << "Enter precision\n";
   cin >> P;
   P+=5;
-  double G0 = 1.0/X;
+  double G0 = 1.0/sqrt(X)-0.000000000000001;
   bigint bG0 = cnv_double(G0,P);
   while (1)  {
-    cout << G0  << '\t' << bG0 << endl;
     double Qi1 = X*G0;
     bigint bQi1 = bG0*X;
     double Qi2 = 3 - Qi1*G0;
@@ -436,7 +428,7 @@ int main() {
     G0=G1;
     bG0=bG1;
   }
-  cout << "The approximated square root = " << G0  << '\t' << bG0 << endl;
+  cout << "The approximated square root = " << G0  << '\n' << bG0 << endl;
   cout << "The square root = " << sqrt(X) << endl;
   cout << bG0.trunc(P-5).sod() << endl;
 }

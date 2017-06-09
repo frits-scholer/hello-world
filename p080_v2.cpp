@@ -459,7 +459,7 @@ int main() {
   vector<bigint> lsqrt(n);
   for (int i = 0;i < n; i++) {
     int X = sieve[i];
-    double G0 = 1.0/X;
+    double G0 = 0.999/sqrt(X);
     bigint bG0 = cnv_double(G0,P);
     while (1)  {
       bigint bQi1 = bG0*X;
