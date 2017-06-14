@@ -8,3 +8,5 @@ Reciprocal square root approximation to approximate square root
 Trying for high precision.
 
 Tagging as a way to store different versions.
+Are tags really useful.
+Note: I used git config credential.helper 'store'
