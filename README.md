@@ -12,3 +12,5 @@ Note: I used git config credential.helper 'store'
 Workflow model
 Create branch for development or other topic
 No work is done on master
+I changed this file on branch dev but want to have it in master
+i don't want newfile.txt in master
